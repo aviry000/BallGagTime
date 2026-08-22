@@ -206,11 +206,11 @@
 <div id="modal-neural-tts" class="modal">
   <div class="modal-box" style="text-align:left;max-width:340px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <b style="color:var(--blue);font-size:13px;">⚙️ AI 真人神經語音設定 (柔弱女性音)</b>
+      <b style="color:var(--blue);font-size:13px;">⚙️ AI 真人神經語音 (極致柔弱弱氣女聲)</b>
       <button class="btn-hud" onclick="safeSetDisplay('modal-neural-tts','none')">✕</button>
     </div>
     <div style="font-size:10.5px;color:#aaa;margin-bottom:8px;line-height:1.3;">
-      已針對 <span style="color:#69f0ae;font-weight:bold;">ElevenLabs Starter 方案</span> 全面調校 15 位語音模型，提供極致嬌喘、微顫、細語與柔弱女性聲線。<br>
+      已針對 <span style="color:#69f0ae;font-weight:bold;">ElevenLabs Starter 方案</span> 啟用「弱氣・極致柔弱細語模式」，降低剛硬度，全面注入呼吸嬌喘與弱氣顫音。<br>
       <span style="color:var(--gold);">（金鑰僅安全儲存於您本地瀏覽器中）</span>
     </div>
     
@@ -224,7 +224,7 @@
     <div style="margin-bottom:6px;">
       <span style="font-size:11px;color:#888;">選擇服務商：</span>
       <select id="neural-provider-select" class="hud-select" style="width:100%;margin-top:2px;" onchange="changeNeuralProvider(this.value)">
-        <option value="elevenlabs" selected>ElevenLabs (Starter/Creator 推薦・極致柔弱女聲)</option>
+        <option value="elevenlabs" selected>ElevenLabs (Starter 推薦・極致柔弱女聲)</option>
         <option value="openai">OpenAI Audio TTS (TTS-1-HD)</option>
         <option value="custom">自訂 / 本地 API (GPT-SoVITS / CosyVoice)</option>
       </select>
@@ -240,20 +240,33 @@
       <input type="text" id="neural-custom-url" placeholder="http://127.0.0.1:9880/tts" style="width:100%;margin-top:2px;font-size:11px;">
     </div>
 
-    <div style="margin-bottom:8px;">
+    <div style="margin-bottom:6px;">
       <span style="font-size:11px;color:#888;">柔弱女性聲線偏好：</span>
-      <select id="neural-voice-select" class="hud-select" style="width:100%;margin-top:2px;">
-        <option value="auto">🌟 依 15 位角色自動匹配最佳【柔弱女性】聲線</option>
-        <option value="EXAVITQu4vr4xnSDxMaL">🌸 Bella (甜美微喘・18歲少女・極致柔弱推薦)</option>
-        <option value="piTKgcLEGmPE4e6mEKli">🍃 Nicole (氣音細語・極致怯弱弱氣 ASMR)</option>
-        <option value="MF3mGyEYCl7XYWbV9V6O">🎀 Elli (嬌嫩軟萌・清純校園學妹)</option>
-        <option value="LcfcDJNUP1GQjkzn1xUU">📖 Emily (安靜甜柔・內向圖書館員)</option>
-        <option value="jsCqWAovK2LkecY7zXl4">🪷 Freya (柔美知性・溫柔嬌羞少女)</option>
-        <option value="XB0fDUnXU5powFXDhCwa">😈 Charlotte (嫵媚氣音・輕聲撩人小惡魔)</option>
-        <option value="21m00Tcm4TlvDq8ikWAM">🩺 Rachel (清柔冷靜・溫婉知性女聲)</option>
-        <option value="pFZP5JQG7iQjIQuC4Bku">💧 Lily (清麗純淨・空靈少女女聲)</option>
-        <option value="jBpfuIE2acCO8z3wKNLl">✨ Gigi (活潑清脆・俏皮嬌嗔學妹)</option>
+      <select id="neural-voice-select" class="hud-select" style="width:100%;margin-top:2px;" onchange="handleVoiceSelectChange(this.value)">
+        <option value="auto">🌟 依 15 位角色自動匹配【極致弱氣柔弱】聲線</option>
+        <option value="piTKgcLEGmPE4e6mEKli">🍃 Nicole (氣音細語・極致弱氣膽怯 ASMR・推薦)</option>
+        <option value="LcfcDJNUP1GQjkzn1xUU">📖 Emily (安靜甜柔・內向纖弱圖書館員)</option>
+        <option value="MF3mGyEYCl7XYWbV9V6O">🎀 Elli (嬌嫩軟萌・清純弱氣學妹)</option>
+        <option value="EXAVITQu4vr4xnSDxMaL">🌸 Bella (甜美微喘・18歲嬌羞少女)</option>
+        <option value="jsCqWAovK2LkecY7zXl4">🪷 Freya (柔美知性・溫柔嬌羞女醫)</option>
+        <option value="XB0fDUnXU5powFXDhCwa">😈 Charlotte (輕聲氣音・嫵媚小惡魔)</option>
+        <option value="pFZP5JQG7iQjIQuC4Bku">💧 Lily (清麗純淨・空靈少女)</option>
+        <option value="custom_voice">✏️ 自訂 ElevenLabs 聲線 ID (VoiceLab 社群)</option>
       </select>
+    </div>
+
+    <div id="custom-voice-id-group" style="margin-bottom:6px;display:none;">
+      <span style="font-size:11px;color:var(--gold);">自訂 Voice ID (可貼上社群柔弱女聲 ID)：</span>
+      <input type="text" id="neural-custom-voice-id" placeholder="例如：piTKgcLEGmPE4e6mEKli" style="width:100%;margin-top:2px;font-size:11px;">
+    </div>
+
+    <div style="background:rgba(255,255,255,0.03);border:1px dashed var(--border);border-radius:6px;padding:6px;margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#aaa;margin-bottom:3px;">
+        <span>氣息顫抖與弱氣度 (Stability)：</span>
+        <b id="lbl-stability" style="color:var(--gold);">0.18 (極致柔弱)</b>
+      </div>
+      <input type="range" id="rng-stability" min="0.10" max="0.50" step="0.02" value="0.18" style="width:100%;" oninput="updateStabilityLabel(this.value)">
+      <div style="font-size:9px;color:#777;margin-top:1px;">數值愈低，聲音愈呈現微弱顫抖、呼吸氣音與嬌羞起伏。</div>
     </div>
 
     <div style="display:flex;gap:6px;">
@@ -1028,7 +1041,7 @@ function getLine(p, stage, m) {
   return item || personaLines.strict[stage] || "服從規訓，咬緊口球。";
 }
 
-// ================= 終極防重疊單一語音引擎 (針對 ElevenLabs Starter & 柔弱女聲全面調校) =================
+// ================= 終極防重疊單一語音引擎 (針對 ElevenLabs Starter & 極致柔弱女聲全面調校) =================
 let isTTSEnabled = localStorage.getItem("TTS_ENABLED") !== "0";
 let isBanterEnabled = localStorage.getItem("TTS_BANTER") !== "0";
 let ttsPersona = localStorage.getItem("TTS_PERSONA") || "strict";
@@ -1037,6 +1050,8 @@ let neuralProvider = localStorage.getItem("NEURAL_PROVIDER") || "elevenlabs";
 let neuralApiKey = localStorage.getItem("NEURAL_API_KEY") || "";
 let neuralCustomUrl = localStorage.getItem("NEURAL_CUSTOM_URL") || "";
 let neuralVoicePref = localStorage.getItem("NEURAL_VOICE_PREF") || "auto";
+let neuralCustomVoiceId = localStorage.getItem("NEURAL_CUSTOM_VOICE_ID") || "";
+let neuralStability = parseFloat(localStorage.getItem("NEURAL_STABILITY") || "0.18");
 
 let currentSpeechId = 0;
 let activeAbortController = null;
@@ -1047,7 +1062,6 @@ const neuralAudioCache = new Map();
 let banterCooldownSec = 0;
 let nextBanterInterval = 140;
 
-// 徹底停止全系統所有正在播放與正在下載的音訊
 function stopAllSpeech() {
   isCurrentlySpeaking = false;
   if (currentNeuralAudio) {
@@ -1075,99 +1089,103 @@ function stopAllSpeech() {
   }
 }
 
-// 聲學情緒劇本增強 (針對 15 位角色注入柔弱女性氣息、微喘息、顫抖與軟萌語氣詞)
+// 聲學情緒劇本增強 (注入極致柔弱女性氣息、微喘息、弱氣顫抖與軟萌語氣詞)
 function enhanceEmotionTextForTTS(rawText, persona) {
   if (!rawText) return "";
   let t = rawText.trim();
   
   if (neuralProvider === 'elevenlabs' || neuralProvider === 'openai') {
     switch (persona) {
-      case 'bound_friend': // 18歲懸吊赴約少女 (微喘息、極致嬌羞柔弱)
-        if (!t.startsWith('唔') && !t.startsWith('哈啊') && !t.startsWith('嗚')) t = '唔……哈啊……' + t;
+      case 'bound_friend': // 18歲懸吊赴約少女 (極致柔弱嬌喘、微顫微喘)
+        if (!t.startsWith('唔') && !t.startsWith('哈啊') && !t.startsWith('嗚')) t = '（小聲微喘）……唔……哈啊……' + t;
         t = t.replace(/！+/g, '……！').replace(/。+/g, '……哈啊……').replace(/，+/g, '……唔……');
         break;
-      case 'delicate_nurse': // 嬌弱實習護士 (軟萌、膽怯、輕聲細語、微哭腔)
-      case 'timid': // 怯弱社恐少女 (害羞顫抖、氣音輕顫)
-        if (!t.startsWith('那、那個') && !t.startsWith('嗚')) t = '那個……' + t;
+      case 'delicate_nurse': // 嬌弱實習護士 (極致軟萌、膽怯、輕聲細語、微哭腔)
+      case 'timid': // 怯弱社恐少女 (極致膽怯顫抖、細若蚊蚋、氣音細語)
+        if (!t.startsWith('那、那個') && !t.startsWith('嗚')) t = '（小聲怯弱）……那個……' + t;
         t = t.replace(/，+/g, '……那個……').replace(/。+/g, '……嗚……').replace(/！+/g, '……！');
         break;
-      case 'shy_librarian': // 內向圖書館員 (輕聲細語、害羞氣音耳語)
-        t = t.replace(/，+/g, '……').replace(/。+/g, '……請慢一點……').replace(/！+/g, '……');
+      case 'shy_librarian': // 內向圖書館員 (極致輕聲細語、害羞氣音耳語)
+        t = '（輕聲細語）……' + t.replace(/，+/g, '……').replace(/。+/g, '……請慢一點……').replace(/！+/g, '……');
         break;
-      case 'gentle_childhood': // 溫婉青梅竹馬 (如水柔情、輕柔撫慰)
-        t = t.replace(/，+/g, '……呼……').replace(/。+/g, '……好嗎……？').replace(/！+/g, '……呢。');
+      case 'gentle_childhood': // 溫婉青梅竹馬 (如水柔情、輕柔耳語撫慰)
+        t = '（溫柔耳語）……' + t.replace(/，+/g, '……呼……').replace(/。+/g, '……好嗎……？').replace(/！+/g, '……呢。');
         break;
       case 'bound_student': // 連帶女學生 (嬌弱喘息、共犯依戀受縛)
-        if (!t.startsWith('嗚')) t = '嗚……' + t;
+        if (!t.startsWith('嗚')) t = '（微弱嬌喘）……嗚……' + t;
         t = t.replace(/！+/g, '……！').replace(/。+/g, '……呼……').replace(/，+/g, '……');
         break;
-      case 'student': // 校園活力學妹 (甜美撒嬌、軟萌少女音)
-        t = t.replace(/！+/g, '~！').replace(/。+/g, '……呢~').replace(/，+/g, '……學長……');
+      case 'student': // 校園活力學妹 (甜美撒嬌、軟萌弱氣少女音)
+        t = '（甜軟嬌嗔）……' + t.replace(/！+/g, '~！').replace(/。+/g, '……呢~').replace(/，+/g, '……學長……');
         break;
       case 'patient': // 精神科病患少女 (嬌柔病態、纖細依偎)
-        t = t.replace(/！+/g, '……嘻……！').replace(/。+/g, '……好不好……？').replace(/，+/g, '……');
+        t = '（纖細弱氣）……' + t.replace(/！+/g, '……嘻……！').replace(/。+/g, '……好不好……？').replace(/，+/g, '……');
         break;
       case 'bound_doctor': // 命運共犯女醫師 (嬌羞知性、輕柔隱忍)
       case 'bound_nurse': // 命運連帶護理師 (輕聲壓抑、柔弱求助)
-        t = t.replace(/！+/g, '……！').replace(/。+/g, '……唔……').replace(/，+/g, '……');
+        t = '（輕聲隱忍）……' + t.replace(/！+/g, '……！').replace(/。+/g, '……唔……').replace(/，+/g, '……');
         break;
       case 'succubus': // 魅魔調教 (嫵媚氣音、輕笑調教)
-        t = t.replace(/！+/g, '……♡！').replace(/。+/g, '……♡').replace(/，+/g, '……~ ');
+        t = '（輕聲嫵媚）……' + t.replace(/！+/g, '……♡！').replace(/。+/g, '……♡').replace(/，+/g, '……~ ');
         break;
-      case 'uniform': // 傲嬌風紀少女 (嬌嗔軟萌、佯裝生氣)
-        t = t.replace(/！+/g, '……！').replace(/，+/g, '……前輩……').replace(/。+/g, '……聽到了沒有……！');
+      case 'uniform': // 傲嬌風紀少女 (嬌嗔軟萌、佯裝生氣但聲線嬌柔)
+        t = '（嬌嗔微弱）……' + t.replace(/！+/g, '……！').replace(/，+/g, '……前輩……').replace(/。+/g, '……聽到了沒有……！');
         break;
       case 'yandere': // 溫柔病嬌 (甜膩氣音、耳畔呢喃)
-        t = t.replace(/。+/g, '……呢……♡').replace(/？+/g, '……好嗎……？♡').replace(/，+/g, '……永遠……');
+        t = '（綿軟呢喃）……' + t.replace(/。+/g, '……呢……♡').replace(/？+/g, '……好嗎……？♡').replace(/，+/g, '……永遠……');
         break;
-      case 'strict': // 清冷少女執法 (清麗柔弱、外冷內柔，告別粗音)
+      case 'strict': // 清冷少女執法 (清麗柔弱、外冷內柔，徹底告別粗沉男聲)
       case 'cyber': // 纖細精靈系 AI (空靈溫柔少女音)
-        t = t.replace(/，+/g, '……').replace(/。+/g, '……。');
+        t = '（清冷柔和）……' + t.replace(/，+/g, '……').replace(/。+/g, '……。');
         break;
     }
-    // 清理重複的多餘省略號
     t = t.replace(/…{3,}/g, '……');
   }
   return t;
 }
 
-// 根據 15 位角色自動匹配最適合的【柔弱女性】神經聲線 (ElevenLabs Starter 完美相容)
+// 根據 15 位角色自動匹配最適合的【極致柔弱弱氣】神經聲線 (以 Nicole/Emily/Elli/Bella 等極致柔弱女聲為主)
 function getNeuralVoiceForPersona(persona) {
-  if (neuralVoicePref && neuralVoicePref !== 'auto') return neuralVoicePref;
+  if (neuralVoicePref === 'custom_voice' && neuralCustomVoiceId) {
+    return neuralCustomVoiceId.trim();
+  }
+  if (neuralVoicePref && neuralVoicePref !== 'auto' && neuralVoicePref !== 'custom_voice') {
+    return neuralVoicePref;
+  }
   
   if (neuralProvider === 'elevenlabs') {
     switch (persona) {
-      // 1. 18歲懸吊赴約少女 (極致嬌喘、微喘息、羞恥沉淪) -> Bella (甜美微喘少女)
-      case 'bound_friend': return 'EXAVITQu4vr4xnSDxMaL';
-      // 2. 嬌弱實習護士 (19歲軟萌、膽怯微哭腔) -> Nicole (氣音細語 ASMR 柔弱女聲)
+      // 1. 18歲懸吊赴約少女 (極致嬌喘、微喘息) -> Nicole (氣音細語 ASMR 柔弱聲線) 或 Bella
+      case 'bound_friend': return 'piTKgcLEGmPE4e6mEKli';
+      // 2. 嬌弱實習護士 (軟萌膽怯、微哭腔) -> Nicole (極致弱氣細語)
       case 'delicate_nurse': return 'piTKgcLEGmPE4e6mEKli';
-      // 3. 怯弱社恐少女 (害羞顫抖、氣音輕顫) -> Nicole (極致怯弱弱氣)
+      // 3. 怯弱社恐少女 (害羞顫抖、氣音輕顫) -> Nicole (極致弱氣 ASMR)
       case 'timid': return 'piTKgcLEGmPE4e6mEKli';
-      // 4. 內向圖書館員 (20歲輕聲細語、害羞安靜) -> Emily (安靜甜柔女聲)
+      // 4. 內向圖書館員 (輕聲細語、安靜甜柔) -> Emily (極致甜柔弱氣)
       case 'shy_librarian': return 'LcfcDJNUP1GQjkzn1xUU';
-      // 5. 溫婉青梅竹馬 (19歲撫慰、如水柔情撫慰) -> Emily (溫婉空靈柔情)
+      // 5. 溫婉青梅竹馬 (溫柔如水、輕柔撫慰) -> Emily (溫婉空靈柔情)
       case 'gentle_childhood': return 'LcfcDJNUP1GQjkzn1xUU';
-      // 6. 連帶女學生 (18歲繩縛、嬌弱喘息) -> Bella (清甜受縛少女)
-      case 'bound_student': return 'EXAVITQu4vr4xnSDxMaL';
-      // 7. 校園女學生 (活力學妹、甜美撒嬌) -> Gigi (活潑清脆嬌嗔學妹)
-      case 'student': return 'jBpfuIE2acCO8z3wKNLl';
-      // 8. 精神科病患少女 (18歲嬌柔俏皮、病態依偎) -> Elli (嬌嫩軟萌少女)
+      // 6. 連帶女學生 (繩縛受縛、嬌弱喘息) -> Elli (嬌嫩軟萌)
+      case 'bound_student': return 'MF3mGyEYCl7XYWbV9V6O';
+      // 7. 校園女學生 (活力學妹、甜美撒嬌) -> Elli (清純軟萌學妹)
+      case 'student': return 'MF3mGyEYCl7XYWbV9V6O';
+      // 8. 精神科病患少女 (嬌柔病態、纖細依偎) -> Elli (嬌嫩軟萌)
       case 'patient': return 'MF3mGyEYCl7XYWbV9V6O';
-      // 9. 制服風紀少女 (嬌嗔傲嬌、軟萌命令) -> Freya (清脆嬌俏傲嬌女聲)
+      // 9. 制服風紀少女 (嬌嗔傲嬌、軟萌傲嬌) -> Freya (清脆嬌俏柔美)
       case 'uniform': return 'jsCqWAovK2LkecY7zXl4';
-      // 10. 命運共犯女醫師 (護理裙裝、嬌羞隱忍) -> Freya (柔美知性嬌羞女醫)
+      // 10. 命運共犯女醫師 (護理裙裝、嬌羞隱忍) -> Freya (柔美知性嬌羞)
       case 'bound_doctor': return 'jsCqWAovK2LkecY7zXl4';
-      // 11. 命運連帶護理師 (23歲輕聲壓抑、柔弱求助) -> Rachel (清柔知性護理師)
-      case 'bound_nurse': return '21m00Tcm4TlvDq8ikWAM';
-      // 12. 魅魔小惡魔 (嫵媚氣音、輕笑調教) -> Charlotte (嫵媚氣音撩人女聲)
+      // 11. 命運連帶護理師 (輕聲壓抑、柔弱求助) -> Emily (溫柔安靜)
+      case 'bound_nurse': return 'LcfcDJNUP1GQjkzn1xUU';
+      // 12. 魅魔小惡魔 (輕柔氣音、嫵媚挑逗) -> Charlotte (嫵媚氣音)
       case 'succubus': return 'XB0fDUnXU5powFXDhCwa';
-      // 13. 溫柔病嬌 (甜膩耳畔呢喃、氣音低語) -> Charlotte (綿軟甜膩呢喃女聲)
-      case 'yandere': return 'XB0fDUnXU5powFXDhCwa';
-      // 14. 冷酷少女執法 (清冷柔弱、外冷內柔少女) -> Rachel (清麗柔美，徹底捨棄男聲)
-      case 'strict': return '21m00Tcm4TlvDq8ikWAM';
+      // 13. 溫柔病嬌 (甜膩耳畔呢喃、氣音低語) -> Nicole (氣音耳語呢喃)
+      case 'yandere': return 'piTKgcLEGmPE4e6mEKli';
+      // 14. 冷酷少女執法 (清冷柔弱、外冷內柔少女) -> Emily (清麗柔美)
+      case 'strict': return 'LcfcDJNUP1GQjkzn1xUU';
       // 15. 賽博 AI 少女 (空靈純淨、纖細精靈女聲) -> Lily (清麗純淨少女)
       case 'cyber': return 'pFZP5JQG7iQjIQuC4Bku';
-      default: return 'EXAVITQu4vr4xnSDxMaL'; // 預設 Bella 柔美少女
+      default: return 'piTKgcLEGmPE4e6mEKli'; // 預設 Nicole 極致弱氣細語
     }
   }
 
@@ -1178,7 +1196,7 @@ function getNeuralVoiceForPersona(persona) {
       case 'uniform': return 'shimmer';
       case 'succubus': return 'shimmer';
       case 'yandere': return 'shimmer';
-      case 'strict': return 'alloy'; // 改為自然輕柔女聲
+      case 'strict': return 'alloy';
       case 'cyber': return 'alloy';
       case 'bound_doctor': return 'fable';
       case 'bound_nurse': return 'alloy';
@@ -1189,14 +1207,14 @@ function getNeuralVoiceForPersona(persona) {
       default: return 'nova';
     }
   }
-  return 'EXAVITQu4vr4xnSDxMaL';
+  return 'piTKgcLEGmPE4e6mEKli';
 }
 
-// 播放 AI 神經語音串流 (針對 ElevenLabs Starter & 柔弱女性專屬聲學參數)
+// 播放 AI 神經語音串流 (針對 ElevenLabs Starter & 極致柔弱弱氣女聲聲學調校)
 async function playNeuralTTSStream(rawText, persona, speechId) {
   const text = enhanceEmotionTextForTTS(rawText, persona);
   const voice = getNeuralVoiceForPersona(persona);
-  const cacheKey = `${neuralProvider}_${voice}_${text}`;
+  const cacheKey = `${neuralProvider}_${voice}_${neuralStability}_${text}`;
 
   // 1. 命中快取
   if (neuralAudioCache.has(cacheKey)) {
@@ -1210,37 +1228,22 @@ async function playNeuralTTSStream(rawText, persona, speechId) {
     return true;
   }
 
-  // 2. 請求 ElevenLabs API (專為 Starter 方案配置最佳柔弱女聲參數)
+  // 2. 請求 ElevenLabs API (專為 Starter 方案配置極致柔弱女聲參數：超低 stability + 關閉 speaker_boost)
   if (neuralProvider === 'elevenlabs') {
     let key = (neuralApiKey || '').trim();
-    // 自動過濾常見誤貼的 Bearer 前綴或雙引號
     key = key.replace(/^Bearer\s+/i, '').replace(/["']/g, '').trim();
     if (!key) throw new Error("尚未輸入 ElevenLabs API Key！請點擊下方設定輸入金鑰。");
     
-    const voiceId = getNeuralVoiceForPersona(persona);
+    const voiceId = voice;
     const targetUrl = "https://api.elevenlabs.io/v1/text-to-speech/" + voiceId;
     
-    // 專為「柔弱女性聲音」調校的聲學參數 (低 stability 帶來真實起伏、呼吸與柔美輕顫)
-    let stabilityVal = 0.28;
-    let styleVal = 0.45;
-    let similarityVal = 0.85;
-
-    if (persona === 'bound_friend' || persona === 'bound_student') {
-      stabilityVal = 0.22; // 極具起伏的呼吸喘息與輕顫
-      styleVal = 0.55;
-    } else if (persona === 'timid' || persona === 'delicate_nurse' || persona === 'shy_librarian') {
-      stabilityVal = 0.20; // 膽怯柔弱、極度輕聲細語
-      styleVal = 0.50;
-    } else if (persona === 'succubus' || persona === 'yandere') {
-      stabilityVal = 0.24; // 魅惑氣音、拖音低語
-      styleVal = 0.52;
-    } else if (persona === 'gentle_childhood' || persona === 'bound_nurse' || persona === 'bound_doctor') {
-      stabilityVal = 0.32; // 溫柔舒緩、撫慰依賴
-      styleVal = 0.40;
-    } else if (persona === 'strict' || persona === 'cyber') {
-      stabilityVal = 0.34; // 清冷柔和少女
-      styleVal = 0.38;
-    }
+    // 極致柔弱弱氣聲學設定：
+    // stability 設為 0.15~0.20，徹底解放聲帶弱氣顫音、微喘氣息與柔弱感
+    // similarity_boost 設為 0.70~0.75，避免剛硬緊繃
+    // use_speaker_boost 設為 false，消除大聲飽和壓縮，使聲音更細軟輕柔
+    let stabilityVal = neuralStability || 0.18;
+    let styleVal = 0.40;
+    let similarityVal = 0.72;
 
     const reqBody = JSON.stringify({
       text: text,
@@ -1249,7 +1252,7 @@ async function playNeuralTTSStream(rawText, persona, speechId) {
         stability: stabilityVal,
         similarity_boost: similarityVal,
         style: styleVal,
-        use_speaker_boost: true
+        use_speaker_boost: false // 關鍵：關閉增益，獲得輕柔細語與耳語感
       }
     });
 
@@ -1295,15 +1298,11 @@ async function playNeuralTTSStream(rawText, persona, speechId) {
       }
 
       if (response.status === 403) {
-        throw new Error("HTTP 403 (權限拒絕)：" + (detailedMsg || "API Key 無效、帳號字數額度已耗盡，或該金鑰無語音生成權限。請至 ElevenLabs 後台確認 API Key 與 Credits 餘額。"));
+        throw new Error("HTTP 403 (權限拒絕)：" + (detailedMsg || "API Key 無效或未開通 text_to_speech 權限，請重新生成 Full Access 金鑰。"));
       } else if (response.status === 401) {
-        throw new Error("HTTP 401 (未授權)：API Key 錯誤或未填寫，請重新複製正確的 ElevenLabs Key。");
-      } else if (response.status === 400) {
-        throw new Error("HTTP 400 (請求參數錯誤)：" + (detailedMsg || "聲線 ID 或模型參數異常。"));
-      } else if (response.status === 429) {
-        throw new Error("HTTP 429 (請求過於頻繁)：已達頻率限制，請稍候再試。");
+        throw new Error("HTTP 401 (未授權)：API Key 錯誤，請重新確認。");
       } else {
-        throw new Error("HTTP " + response.status + ": " + (detailedMsg || "伺服器異常"));
+        throw new Error("HTTP " + response.status + ": " + (detailedMsg || "請求異常"));
       }
     }
 
@@ -1325,8 +1324,7 @@ async function playNeuralTTSStream(rawText, persona, speechId) {
     const key = (neuralApiKey || '').trim();
     if (!key) throw new Error("尚未輸入 OpenAI API Key！");
     
-    let personaSpeed = 0.92; // 柔弱女性微降語速，增添氣息感
-    if (persona === 'bound_friend' || persona === 'timid' || persona.includes('nurse')) personaSpeed = 0.88;
+    let personaSpeed = 0.88; // 柔弱女性微降語速，增添氣息感
 
     const response = await fetch("https://api.openai.com/v1/audio/speech", {
       method: "POST",
@@ -1371,7 +1369,7 @@ async function playNeuralTTSStream(rawText, persona, speechId) {
       body: JSON.stringify({ text: text, character: persona })
     });
     if (!response.ok) throw new Error(`自訂 API 錯誤: ${response.status}`);
-    if (speechId && speechId !== currentSpeechId) return false;
+    if (speechId !== currentSpeechId) return false;
 
     const blob = await response.blob();
     const audioUrl = URL.createObjectURL(blob);
@@ -1395,7 +1393,6 @@ function speakTTS(text) {
 
   if (isNeuralTTSEnabled && (neuralApiKey || neuralCustomUrl)) {
     playNeuralTTSStream(text, ttsPersona, speechId).catch((err) => {
-      // 關鍵防重疊：如果錯誤是由於新請求打斷(AbortError)或序號已過期，絕對不要降級發聲！
       if (speechId === currentSpeechId && err.name !== 'AbortError') {
         console.warn("AI 神經語音請求受阻，平滑切換為本地合成:", err);
         fallbackLocalSpeech(text, speechId);
@@ -1407,7 +1404,7 @@ function speakTTS(text) {
   fallbackLocalSpeech(text, speechId);
 }
 
-// 降級本機語音合成 (全面調校為柔和嬌嫩女聲 pitch 1.25 ~ 1.42)
+// 降級本機語音合成 (全面調校為柔和嬌嫩女聲 pitch 1.35 ~ 1.45)
 function fallbackLocalSpeech(text, speechId) {
   if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
   if (speechId && speechId !== currentSpeechId) return;
@@ -1422,12 +1419,12 @@ function fallbackLocalSpeech(text, speechId) {
     try {
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'zh-TW';
-      let p = 1.35, r = 0.88; // 本地合成全面調為柔和高音與慢速
-      if (ttsPersona === 'bound_friend') { p = 1.40; r = 0.90; }
-      else if (ttsPersona.includes('nurse') || ttsPersona.includes('librarian') || ttsPersona.includes('childhood') || ttsPersona === 'timid') { p = 1.42; r = 0.85; }
-      else if (ttsPersona.includes('student') || ttsPersona.includes('uniform') || ttsPersona === 'succubus') { p = 1.34; r = 0.92; }
-      else if (ttsPersona === 'strict') { p = 1.25; r = 0.90; }
-      else if (ttsPersona === 'cyber') { p = 1.30; r = 0.96; }
+      let p = 1.38, r = 0.85; // 本地合成調為柔和高音與慢速
+      if (ttsPersona === 'bound_friend') { p = 1.42; r = 0.88; }
+      else if (ttsPersona.includes('nurse') || ttsPersona.includes('librarian') || ttsPersona.includes('childhood') || ttsPersona === 'timid') { p = 1.45; r = 0.82; }
+      else if (ttsPersona.includes('student') || ttsPersona.includes('uniform') || ttsPersona === 'succubus') { p = 1.36; r = 0.90; }
+      else if (ttsPersona === 'strict') { p = 1.28; r = 0.88; }
+      else if (ttsPersona === 'cyber') { p = 1.32; r = 0.92; }
       u.pitch = p; u.rate = r;
       u.onstart = () => { isCurrentlySpeaking = true; };
       u.onend = () => { isCurrentlySpeaking = false; };
@@ -1495,14 +1492,29 @@ function triggerRandomBanter(remainSec, totalSec) {
   speakTTS(line);
 }
 
+function handleVoiceSelectChange(val) {
+  safeSetDisplay('custom-voice-id-group', val === 'custom_voice' ? 'block' : 'none');
+}
+
+function updateStabilityLabel(val) {
+  const lbl = document.getElementById('lbl-stability');
+  if (lbl) {
+    const num = parseFloat(val);
+    let desc = "(極致柔弱弱氣)";
+    if (num > 0.35) desc = "(平穩偏冷靜)";
+    else if (num > 0.25) desc = "(溫和柔順)";
+    lbl.innerText = `${num.toFixed(2)} ${desc}`;
+  }
+}
+
 async function testNeuralTTS() {
-  const sample = "唔……哈啊……這是 ElevenLabs 柔弱女聲試聽……下顎請確實張開……規訓即將開始囉……";
-  safeSetText('neural-status-msg', "⏳ 正在請求 ElevenLabs 柔弱女聲合成...");
+  const sample = "（小聲微喘）……唔……哈啊……下顎請確實張開……規訓即將開始囉……";
+  safeSetText('neural-status-msg', "⏳ 正在請求 ElevenLabs 極致柔弱女聲合成...");
   const testId = ++currentSpeechId;
   stopAllSpeech();
   try {
     await playNeuralTTSStream(sample, ttsPersona, testId);
-    safeSetText('neural-status-msg', "✔ 試聽播放成功！柔弱聲線與呼吸顫音已就緒。");
+    safeSetText('neural-status-msg', "✔ 試聽播放成功！柔弱弱氣聲線與呼吸顫音已就緒。");
   } catch (err) {
     safeSetText('neural-status-msg', `❌ 失敗: ${err.message}`);
   }
@@ -1514,9 +1526,14 @@ function openNeuralTTSModal() {
   const keyInp = document.getElementById('neural-api-key'); if (keyInp) keyInp.value = neuralApiKey;
   const urlInp = document.getElementById('neural-custom-url'); if (urlInp) urlInp.value = neuralCustomUrl;
   const voiceSel = document.getElementById('neural-voice-select'); if (voiceSel) voiceSel.value = neuralVoicePref;
+  const customVoiceInp = document.getElementById('neural-custom-voice-id'); if (customVoiceInp) customVoiceInp.value = neuralCustomVoiceId;
+  const rngStab = document.getElementById('rng-stability'); if (rngStab) rngStab.value = neuralStability;
+  updateStabilityLabel(neuralStability);
+
+  safeSetDisplay('custom-voice-id-group', neuralVoicePref === 'custom_voice' ? 'block' : 'none');
   safeSetDisplay('neural-custom-url-group', neuralProvider === 'custom' ? 'block' : 'none');
   safeSetDisplay('neural-api-key-group', neuralProvider === 'custom' ? 'none' : 'block');
-  safeSetText('neural-status-msg', isNeuralTTSEnabled ? "✔ 目前已啟用 ElevenLabs AI 柔弱女聲" : "⚪ 目前使用本機合成語音");
+  safeSetText('neural-status-msg', isNeuralTTSEnabled ? "✔ 目前已啟用 ElevenLabs AI 極致弱氣女聲" : "⚪ 目前使用本機合成語音");
   safeSetDisplay('modal-neural-tts', 'flex');
 }
 
@@ -1536,17 +1553,20 @@ function saveNeuralTTSSettings() {
   neuralApiKey = (document.getElementById('neural-api-key')?.value || '').trim();
   neuralCustomUrl = (document.getElementById('neural-custom-url')?.value || '').trim();
   neuralVoicePref = document.getElementById('neural-voice-select')?.value || 'auto';
+  neuralCustomVoiceId = (document.getElementById('neural-custom-voice-id')?.value || '').trim();
+  neuralStability = parseFloat(document.getElementById('rng-stability')?.value || "0.18");
 
   localStorage.setItem("NEURAL_TTS_ENABLED", isNeuralTTSEnabled ? "1" : "0");
   localStorage.setItem("NEURAL_PROVIDER", neuralProvider);
   localStorage.setItem("NEURAL_API_KEY", neuralApiKey);
   localStorage.setItem("NEURAL_CUSTOM_URL", neuralCustomUrl);
   localStorage.setItem("NEURAL_VOICE_PREF", neuralVoicePref);
+  localStorage.setItem("NEURAL_CUSTOM_VOICE_ID", neuralCustomVoiceId);
+  localStorage.setItem("NEURAL_STABILITY", String(neuralStability));
 
-  safeSetText('neural-status-msg', "✔ ElevenLabs 柔弱聲線設定已儲存！");
+  safeSetText('neural-status-msg', "✔ ElevenLabs 極致柔弱聲線設定已儲存！");
   setTimeout(() => safeSetDisplay('modal-neural-tts', 'none'), 600);
 }
-
 // ================= 完整音景合成引擎 (包含雨聲、古典和弦、腦波、心跳、滴答) =================
 let audioCtx = null, ambientTimer = null, rainSource = null, rainGain = null, classicalTimer = null;
 let ambientOsc1 = null, ambientOsc2 = null, ambientGain = null;
